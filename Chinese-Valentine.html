@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七夕限定卡池</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">💖</text></svg>');
+            background-repeat: repeat;
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 90%;
+            width: 500px;
+            border: 1px solid #e0e0e0;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #ff69b4;
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .header-emoji {
+            font-size: 1.5em;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .instruction {
+            background-color: #fff0f6;
+            border: 1px dashed #ffb6c1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            color: #d63384;
+            font-weight: 500;
+        }
+
+        .draw-button {
+            background: linear-gradient(45deg, #ff85a2, #ffb6c1);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .draw-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+        }
+
+        .draw-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(255, 105, 180, 0.5);
+        }
+
+        #result {
+            margin-top: 30px;
+            min-height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .ssr-result {
+            color: #fff !important;
+            background: linear-gradient(45deg, #ff7e5f, #feb47b, #ff7e5f);
+            animation: ssr-shine 2s infinite;
+            border: 2px solid gold !important;
+            box-shadow: 0 0 20px gold;
+        }
+
+        @keyframes ssr-shine {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #aaa;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>
+            <span class="header-emoji">🎉</span>
+            <span style="color: #ff1493;">❤</span>️七夕限定卡池<span style="color: #ff1493;">❤</span>️
+            <span class="header-emoji">🎉</span>
+        </h1>
+        <p class="description">
+            向 @群友 编辑发送“咱俩试试？”，即有机会获得限定SSR！
+        </p>
+        <div class="instruction">
+            💌 点击下方按钮，抽取你的限定回复 💌
+        </div>
+        
+        <button class="draw-button" onclick="draw()">开始抽取</button>
+
+        <div id="result">
+            <p>看看你的运气如何？</p>
+        </div>
+
+        <p class="footer">
+            抽取日期: 2025年8月29日之前 | *抽取概率为综合概率
+        </p>
+    </div>
+
+    <script>
+        const pool = [
+            { name: "滚你妈的", probability: 10 },
+            { name: "去你妈的", probability: 10 },
+            { name: "你也配？", probability: 10 },
+            { name: "傻逼二次元", probability: 10 },
+            { name: "癔症又犯了？", probability: 10 },
+            { name: "真恶心", probability: 5 },
+            { name: "现在是幻想时刻", probability: 5 },
+            { name: "柚子厨滚出去", probability: 5 },
+            { name: "这是最后通牒", probability: 5 },
+            { name: "以后不要再和我扯上关系", probability: 5 },
+            { name: "被拉黑+屏蔽", probability: 5 },
+            { name: "小男娘", probability: 5 },
+            { name: "随机的网图", probability: 2.5 },
+            { name: "随机的贴吧圣经", probability: 2.5 },
+            { name: "下次再说吧", probability: 2.5 },
+            { name: "你是个好人", probability: 2.5 },
+            { name: "我一直把你当好朋友", probability: 2.5 },
+            { name: "滚出去", probability: 2.49 },
+            { name: "好呀宝宝 💖", probability: 0.01 }
+        ];
+
+        function draw() {
+            const resultElement = document.getElementById('result');
+            const buttonElement = document.querySelector('.draw-button');
+
+            // 禁用按钮防止连续点击
+            buttonElement.disabled = true;
+            resultElement.innerHTML = "<p>正在抽取中...</p>";
+            resultElement.classList.remove("ssr-result");
+
+            setTimeout(() => {
+                const rand = Math.random() * 100;
+                let cumulativeProbability = 0;
+                let drawnResult = null;
+
+                for (const item of pool) {
+                    cumulativeProbability += item.probability;
+                    if (rand < cumulativeProbability) {
+                        drawnResult = item;
+                        break;
+                    }
+                }
+                
+                // 显示结果
+                resultElement.innerHTML = `<p>${drawnResult.name}</p>`;
+
+                // 如果抽中SSR，添加特殊样式
+                if (drawnResult.name === "好呀宝宝 💖") {
+                    resultElement.classList.add("ssr-result");
+                }
+                
+                // 重新启用按钮
+                buttonElement.disabled = false;
+
+            }, 1000); // 模拟抽卡延迟
+        }
+    </script>
+
+</body>
+</html>
